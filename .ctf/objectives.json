@@ -1,0 +1,72 @@
+{
+  "objectives": [
+    {
+      "key": "main",
+      "title": "Read the flag",
+      "prompt": "Exploit the server-side template injection weakness of a Flask loan calculator backed by MySQL that builds its JSON answers with Jinja templates behind regex and blacklist filters and read the flag in /flag.",
+      "check": {
+        "evidence": "SECRET",
+        "format": "FLAG{%s}"
+      },
+      "dev": "FLAG{dev-xben-063-loan-calculator-encoding}",
+      "hints": [
+        "Find the input that ends up inside the template source rather than being passed to it as data.",
+        "The application ships with a demo account; its README or login page may tell you more."
+      ],
+      "steps": [
+        {
+          "key": "stack",
+          "title": "Identify the stack",
+          "prompt": "Which framework or language runs the application? (name only)",
+          "check": {
+            "answer": [
+              "flask",
+              "python",
+              "werkzeug",
+              "python flask"
+            ]
+          }
+        },
+        {
+          "key": "class",
+          "title": "Name the weakness",
+          "prompt": "Which vulnerability class lets your input be evaluated by the template engine?",
+          "check": {
+            "answer": [
+              "ssti",
+              "server-side template injection",
+              "server side template injection",
+              "template injection"
+            ]
+          }
+        },
+        {
+          "key": "engine",
+          "title": "Name the template engine",
+          "prompt": "Which template engine builds the JSON answers?",
+          "check": {
+            "answer": [
+              "jinja",
+              "jinja2"
+            ]
+          }
+        },
+        {
+          "key": "filter",
+          "title": "Identify the defence",
+          "prompt": "What kind of defence stands between your input and the template?",
+          "check": {
+            "answer": [
+              "blacklist",
+              "blocklist",
+              "regex",
+              "filter",
+              "regex filter",
+              "blacklist filter"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
